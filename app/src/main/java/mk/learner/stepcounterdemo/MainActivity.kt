@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         }
     }
 
-
-
     override fun onPause() {
         super.onPause()
         running = false

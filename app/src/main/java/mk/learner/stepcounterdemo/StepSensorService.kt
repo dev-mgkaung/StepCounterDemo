@@ -44,7 +44,7 @@ class StepSensorService : Service(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent?) {
 
-        var stepCount = event?.values?.get(0)?.toInt()
+        val stepCount = event?.values?.get(0)?.toInt()
 
         val notificationIntent = Intent(this, SecondActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
@@ -74,7 +74,7 @@ class StepSensorService : Service(), SensorEventListener {
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
 
-    fun reRegisterSensor() {
+    private fun reRegisterSensor() {
         val stepsSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
         if (stepsSensor == null) {
             toast("No Step Counter Sensor !")
