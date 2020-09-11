@@ -1,6 +1,6 @@
 # StepCounterDemo (Pedometer)
 
-  Create a Step Counter Fitness App for Android with Kotlin
+  Create a Step Counter App for Android with Kotlin
 
    In that tutorial, you are going to discover how to create a Step Counter Fitness Application for Android with Kotlin. A good way to discover how to make a simple application in Kotlin on Android Studio.
    
