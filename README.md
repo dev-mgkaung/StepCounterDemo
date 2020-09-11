@@ -23,9 +23,9 @@ For Start Service,
     
 For Stop Service,
     
-    ```python
+   ```python
     StepSensorService.stopService(this)
-    ```
+   ```
 
 App Screenshoot
 --------
