@@ -15,6 +15,8 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.widget.RemoteViews
 
 
 class StepSensorService : Service(), SensorEventListener {
@@ -30,7 +32,7 @@ class StepSensorService : Service(), SensorEventListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         // Send a notification that service is started
-         toast("Service started.")
+        toast("Service started.")
         //init sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         reRegisterSensor()
@@ -61,9 +63,20 @@ class StepSensorService : Service(), SensorEventListener {
             .build()
         startForeground(1, notification)
         createNotificationChannel() // update notification
+        updateStepWidget(stepCount.toString())
 
     }
 
+    private fun updateStepWidget(stepCount: String)
+    {
+        val views = RemoteViews(this.packageName, R.layout.pedo_meter_widget)
+
+        views.setTextViewText(R.id.appwidget_text, "${stepCount} steps")
+        // Instruct the widget manager to update the widget
+        val theWidget = ComponentName(this, PedoMeterWidget::class.java)
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        appWidgetManager.updateAppWidget(theWidget, views)
+    }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(

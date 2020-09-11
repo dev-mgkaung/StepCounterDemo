@@ -47,10 +47,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         if (running)  stepsValue.text= "Total Steps = ${event.values[0]} steps"
         saveTitlePref(this, appWidgetId, event.values[0].toString())
         updateAppWidget(this, appWidgetManager, appWidgetId)
-       //  Make sure we pass back the original appWidgetId
-        val resultValue = Intent()
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        setResult(RESULT_OK, resultValue)
     }
 
     override fun onDestroy() {
@@ -86,7 +82,7 @@ private const val PREF_PREFIX_KEY = "appwidget"
 // Write the prefix to the SharedPreferences object for this widget
 internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-    prefs.putString(PREF_PREFIX_KEY + appWidgetId, text)
+    prefs.putString(PREF_PREFIX_KEY , text)
     prefs.apply()
 }
 
@@ -95,7 +91,8 @@ internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {
 internal fun loadTitlePref(context: Context, appWidgetId: Int): String {
 
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-    val titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId , null)
+    val titleValue = prefs.getString(PREF_PREFIX_KEY  , null)
+    context.toast("load data $titleValue")
     return titleValue ?:"0"
 }
 

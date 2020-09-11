@@ -9,6 +9,8 @@ import android.widget.RemoteViews
 
 
 class PedoMeterWidget : AppWidgetProvider() {
+
+    private var service: PendingIntent? = null
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -36,12 +38,9 @@ internal fun updateAppWidget(
 ) {
     val widgetText = loadTitlePref(context, appWidgetId)
     context.toast("widget Text= $widgetText")
-    val pendingIntent = PendingIntent
-        .getActivity(context, appWidgetId, Intent(context, MainActivity::class.java), 0)
-    // Construct the RemoteViews object
+    val pendingIntent = PendingIntent.getActivity(context, appWidgetId, Intent(context, MainActivity::class.java), 0)
     val views = RemoteViews(context.packageName, R.layout.pedo_meter_widget)
     views.setTextViewText(R.id.appwidget_text, widgetText)
     views.setOnClickPendingIntent(R.id.pedowidget, pendingIntent)
-    // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
