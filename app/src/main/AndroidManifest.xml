@@ -8,18 +8,25 @@
     <uses-feature
         android:name="android.hardware.sensor.stepdetector"
         android:required="true" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SecondActivity"
-            android:label="@string/title_activity_second"
-            android:theme="@style/AppTheme" />
+
+        <receiver android:name=".PedoMeterWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pedo_meter_widget_info" />
+        </receiver>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,10 +37,9 @@
         </activity>
 
         <service
-            android:name="StepSensorService"
+            android:name=".StepSensorService"
             android:enabled="true"
-            android:exported="true"
-            />
+            android:exported="true" />
     </application>
 
 </manifest>

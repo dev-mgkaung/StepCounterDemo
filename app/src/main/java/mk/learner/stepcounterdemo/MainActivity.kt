@@ -1,8 +1,8 @@
 package mk.learner.stepcounterdemo
 
 import android.annotation.SuppressLint
+import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -12,7 +12,6 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() , SensorEventListener {
-
     private var running = false
     private lateinit  var sensorManager: SensorManager
 
@@ -24,13 +23,18 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         btn_next.setOnClickListener{
-            startActivity(Intent(this,SecondActivity::class.java))
+            StepSensorService.startService(this)
         }
     }
 
     @SuppressLint("SetTextI18n")
     override fun onSensorChanged(event: SensorEvent) {
-        if (running)  stepsValue.text= "Today Step ${event.values[0]}"
+        if (running)  stepsValue.text= "Total Steps = ${event.values[0]} steps"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StepSensorService.stopService(this)
     }
 
     override fun onAccuracyChanged(event: Sensor?, p1: Int) {}

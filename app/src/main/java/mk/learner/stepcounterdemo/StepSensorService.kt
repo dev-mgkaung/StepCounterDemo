@@ -14,7 +14,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-
+import android.appwidget.AppWidgetManager
 
 class StepSensorService : Service(), SensorEventListener {
 
@@ -28,9 +28,15 @@ class StepSensorService : Service(), SensorEventListener {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         // Send a notification that service is started
         toast("Service started.")
-
+        val appWidgetManager: AppWidgetManager = AppWidgetManager.getInstance(this)
+        val allWidgetIds = intent?.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
+        if (allWidgetIds != null) {
+            for (appWidgetId in allWidgetIds) {
+              // PedoMeterWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
+            }
+        }
         //init sensor Manager
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         reRegisterSensor()
 
         return START_STICKY
@@ -46,7 +52,7 @@ class StepSensorService : Service(), SensorEventListener {
 
         val stepCount = event?.values?.get(0)?.toInt()
 
-        val notificationIntent = Intent(this, SecondActivity::class.java)
+        val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, 0
@@ -54,11 +60,17 @@ class StepSensorService : Service(), SensorEventListener {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Foreground Service")
             .setContentText("Total Step Counts $stepCount steps")
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+            .setSmallIcon(R.drawable.icon)
             .setContentIntent(pendingIntent)
             .build()
         startForeground(1, notification)
         createNotificationChannel() // update notification
+        updatePedoMeterWidget(stepCount?.toString())
+
+    }
+    private fun updatePedoMeterWidget(stepCount : String?)
+    {
+
     }
 
     private fun createNotificationChannel() {
