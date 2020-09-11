@@ -2,10 +2,10 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/pedo_meter_widget"
     android:initialLayout="@layout/pedo_meter_widget"
-    android:minWidth="180dp"
+    android:minWidth="250dp"
     android:minHeight="40dp"
-    android:previewImage="@drawable/icon"
-    android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/example_appwidget_preview"
+    android:resizeMode="horizontal"
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen|keyguard">
 

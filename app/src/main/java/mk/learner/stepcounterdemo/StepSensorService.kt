@@ -16,10 +16,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import android.appwidget.AppWidgetManager
 
+
 class StepSensorService : Service(), SensorEventListener {
 
     private val CHANNEL_ID = "Step Counter Notification"
     private lateinit var sensorManager: SensorManager
+    private lateinit var appWidgetManager: AppWidgetManager
+    private lateinit var  allWidgetIds : IntArray
 
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
@@ -27,14 +30,7 @@ class StepSensorService : Service(), SensorEventListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         // Send a notification that service is started
-        toast("Service started.")
-        val appWidgetManager: AppWidgetManager = AppWidgetManager.getInstance(this)
-        val allWidgetIds = intent?.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
-        if (allWidgetIds != null) {
-            for (appWidgetId in allWidgetIds) {
-              // PedoMeterWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
-            }
-        }
+         toast("Service started.")
         //init sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         reRegisterSensor()
@@ -65,11 +61,6 @@ class StepSensorService : Service(), SensorEventListener {
             .build()
         startForeground(1, notification)
         createNotificationChannel() // update notification
-        updatePedoMeterWidget(stepCount?.toString())
-
-    }
-    private fun updatePedoMeterWidget(stepCount : String?)
-    {
 
     }
 

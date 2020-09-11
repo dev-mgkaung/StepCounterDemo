@@ -1,13 +1,13 @@
 package mk.learner.stepcounterdemo
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 
-/**
- * Implementation of App Widget functionality.
- */
+
 class PedoMeterWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
@@ -29,16 +29,19 @@ class PedoMeterWidget : AppWidgetProvider() {
     }
 }
 
-    internal fun updateAppWidget(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
-    ) {
-        val widgetText = context.getString(R.string.appwidget_text)
-        // Construct the RemoteViews object
-        val views = RemoteViews(context.packageName, R.layout.pedo_meter_widget)
-        views.setTextViewText(R.id.appwidget_text, widgetText)
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views)
-    }
+internal fun updateAppWidget(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int
+) {
+    val widgetText = loadTitlePref(context, appWidgetId)
+    context.toast("widget Text= $widgetText")
+    val pendingIntent = PendingIntent
+        .getActivity(context, appWidgetId, Intent(context, MainActivity::class.java), 0)
+    // Construct the RemoteViews object
+    val views = RemoteViews(context.packageName, R.layout.pedo_meter_widget)
+    views.setTextViewText(R.id.appwidget_text, widgetText)
+    views.setOnClickPendingIntent(R.id.pedowidget, pendingIntent)
+    // Instruct the widget manager to update the widget
+    appWidgetManager.updateAppWidget(appWidgetId, views)
+}

@@ -18,15 +18,16 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".PedoMeterWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/pedo_meter_widget_info" />
         </receiver>
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
