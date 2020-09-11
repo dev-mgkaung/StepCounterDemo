@@ -13,18 +13,19 @@ Referenece link Here (https://developer.android.com/guide/topics/sensors/sensors
 
 (I am really sorry friends, My english is not good)
 
-```python
-   IF you want to use my steps service class, you can easy put this features in your codesbase.
+ IF you want to use my steps service class, you can easy put this features in your codesbase.
    
-    For Start Service,
+For Start Service,
     
-    StepSensorService.startService(this)
+  ```python
+     StepSensorService.startService(this)
+  ```
     
-    For Stop Service,
+For Stop Service,
     
+    ```python
     StepSensorService.stopService(this)
-   
-```
+    ```
 
 App Screenshoot
 --------
